@@ -42,6 +42,60 @@ const resolvers = {
       return db.authors.find((author) => author.id === parent.author_id);
     },
   },
+  Mutation: {
+    deleteGame(_, args) {
+      db.games = db.games.filter((game) => game.id !== args.id);
+      return db.games;
+    },
+    addGame(_, args) {
+      let game = { ...args.game, id: Math.floor(Math.random() * 10000) };
+      db.games.push(game);
+      return game;
+    },
+    updateGame(_, args) {
+      db.games = db.games.map((game) => {
+        if (game.id === args.id) {
+          return { ...game, ...args.edits };
+        }
+        return game;
+      });
+      return db.games.find((game) => game.id === args.id);
+    },
+    deleteReview(_, args) {
+      db.reviews = db.reviews.filter((review) => review.id !== args.id);
+      return db.reviews;
+    },
+    addReview(_, args) {
+      let review = { ...args.review, id: Math.floor(Math.random() * 10000) };
+      db.reviews.push(review);
+      return review;
+    },
+    updateReview(_, args) {
+      db.reviews = db.reviews.map((review) => {
+        if (review.id === args.id) {
+          return { ...review, ...args.edits };
+        }
+        return review;
+      });
+    },
+    deleteAuthor(_id, args) {
+      db.authors = db.authors.filter((author) => author.id !== args.id);
+      return db.authors;
+    },
+    addAuthor(_, args) {
+      let author = { ...args.author, id: Math.floor(Math.random() * 10000) };
+      db.authors.push(author);
+      return author;
+    },
+    updateAuthor(_, args) {
+      db.authors = db.authors.map((author) => {
+        if (author.id === args.id) {
+          return { ...author, ...args.edit };
+        }
+        return author;
+      });
+    },
+  },
 };
 
 // server setup
